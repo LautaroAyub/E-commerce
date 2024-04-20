@@ -5,8 +5,8 @@ import MyOrder from '../MyOrder'
 import MyOrders from '../MyOrders'
 import NotFound from '../Notfound'
 import SingIn from '../SingIn'
+import { NavBar } from '../../Components/NavBar'
 import './App.css'
-import { element } from 'prop-types'
 
 const AppRoutes=()=>{
   let routes=useRoutes([
@@ -24,6 +24,7 @@ const App= ()=> {
   return (
     <BrowserRouter>
     <AppRoutes/>
+    <NavBar/>
     </BrowserRouter>
   )
 }

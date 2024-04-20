@@ -1,12 +1,12 @@
+import Layout from "../../Components/Layout"
 function SingIn() {
 
     return (
-      <>
-        <div className='bg-green-200'> 
-        SingIn
-        </div>
-  
-      </>
+      <Layout>
+     SingIn
+        </Layout>
+      
+ 
     )
   }
   
