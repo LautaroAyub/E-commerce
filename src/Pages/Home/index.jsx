@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import Layout from "../../Components/Layout"
-import Card from "../../Components/Card/indes"
+
+import Card from "../../Components/Card";
+import Productdetail from "../../Components/ProductDetail";
 function Home() {
     const urlAPI = 'https://fakestoreapi.com';
     const [items, setItems] = useState(null)
@@ -23,6 +25,7 @@ function Home() {
                     ))
                 }
             </div>
+            <Productdetail></Productdetail>
 
         </Layout>
 
