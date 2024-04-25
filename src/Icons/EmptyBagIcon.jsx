@@ -1,4 +1,4 @@
-const BagEmptyIcon = ({w, h,bg}) => (
+const EmptyBagIcon = ({w, h,bg}) => (
 
     
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className={`w-${w} h-${h} bg-${bg}`}>
@@ -6,4 +6,4 @@ const BagEmptyIcon = ({w, h,bg}) => (
 </svg>
 )
 
-export default BagEmptyIcon
+export default EmptyBagIcon
