@@ -5,7 +5,7 @@ import { ShoppingCartContext } from "../../Context"
 
 const Productdetail=()=>{
     const{closeProductDetail, isProductDetailOpen,productToShow}=useContext(ShoppingCartContext)
-    console.log(productToShow);
+  
 return(
 
     <aside 
@@ -18,12 +18,12 @@ return(
         </div>
 
         <figure className="px-6 flex justify-center items-center">
-            <img src={productToShow.image} alt={productToShow.title} className=" max-h-[300px] " />
+            <img src={productToShow.image} alt={productToShow.title} className=" max-h-[280px] " />
         </figure>
-        <p className="flex flex-col p-6">
+        <p className="flex flex-col p-6 ">
             <span className="font-medium text-2xl">${productToShow.price}</span>
             <span className="font-medium text-md" >{productToShow.title}</span>
-            <span className="font-light text-sm">{productToShow.description}</span>
+            <span className="font-light  overflow-y-auto text-sm">{productToShow.description}</span>
         </p>
 
     </aside>

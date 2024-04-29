@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 export const ShoppingCartContext=createContext()
 
@@ -7,13 +7,36 @@ export const ShoppingCartProvider=({children})=>{
     //Shopping Cart . Increment quantity
     const[count, setCount]=useState(0)
 
-    //Product Detail ' Open Close
+    //Product Detail ' Open / Close
     const[isProductDetailOpen, setIsProductDetailOpen]=useState(false)
+    
     const openProductDetail=()=> setIsProductDetailOpen(true)
     const closeProductDetail=()=> setIsProductDetailOpen(false)
 
+    //Checkout Side Menu ' Open / Close
+    const[isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen]=useState(false)
+    const toggleCheckoutSideMenu=()=> setIsCheckoutSideMenuOpen(!isCheckoutSideMenuOpen)
+
+
+
     //Product Detail ' Show Product
     const[productToShow,setProductToShow]=useState({})
+
+    //Shopping cart ' Add products to cart
+    const[cartProducts,setCartProducts]=useState([])
+    console.log(cartProducts)
+
+//To navBar 
+    const updateQuantityInIconCart=()=>{
+        let numOfClothes=0
+        cartProducts.map(element=> numOfClothes+=element.quantity)
+        setCount(numOfClothes)
+        }
+        useEffect(() => {
+            updateQuantityInIconCart();
+        }, [cartProducts]);
+
+    //
 
     
     return(
@@ -23,8 +46,14 @@ export const ShoppingCartProvider=({children})=>{
             openProductDetail,
             closeProductDetail,
             isProductDetailOpen,
-            productToShow,
-            setProductToShow
+            isCheckoutSideMenuOpen,
+            setIsCheckoutSideMenuOpen,
+            toggleCheckoutSideMenu,
+             productToShow,
+            setProductToShow,
+            setCartProducts,
+            cartProducts,
+            updateQuantityInIconCart
         }} 
         >
               {children}
