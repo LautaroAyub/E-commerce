@@ -26,6 +26,10 @@ export const ShoppingCartProvider=({children})=>{
     const[cartProducts,setCartProducts]=useState([])
     console.log(cartProducts)
 
+    //Shopping cart ' Order
+    const[order,setOrder]=useState([])
+    console.log(order,"orderss")
+
 //To navBar 
     const updateQuantityInIconCart=()=>{
         let numOfClothes=0
@@ -36,9 +40,9 @@ export const ShoppingCartProvider=({children})=>{
             updateQuantityInIconCart();
         }, [cartProducts]);
 
-    //
 
-    
+
+
     return(
         <ShoppingCartContext.Provider value={{
             count,
@@ -53,7 +57,9 @@ export const ShoppingCartProvider=({children})=>{
             setProductToShow,
             setCartProducts,
             cartProducts,
-            updateQuantityInIconCart
+            updateQuantityInIconCart,
+            order,
+            setOrder
         }} 
         >
               {children}

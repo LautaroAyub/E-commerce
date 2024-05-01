@@ -9,3 +9,12 @@ let sum=0
 products.map(product=>{sum+=product.price})
 return sum
 }
+
+/**
+ * 
+ * @returns {string} to created order
+ */
+export const currentDate = () => {
+    const date = new Date().toLocaleDateString();
+    return date
+ }
