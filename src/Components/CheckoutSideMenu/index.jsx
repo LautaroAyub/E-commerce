@@ -7,14 +7,13 @@ import { currentDate, totalPrice } from "../../Utils"
 
 
 const CheckoutSideMenu = () => {
-    const {isCheckoutSideMenuOpen, toggleCheckoutSideMenu,cartProducts,setOrder,order,setCartProducts } = useContext(ShoppingCartContext) 
+    const {isCheckoutSideMenuOpen, toggleCheckoutSideMenu,cartProducts,setOrder,order,setCartProducts, setSearchByTitle } = useContext(ShoppingCartContext) 
 
     const handleCheckout=() => {
      const totalProducts= cartProducts.reduce((total,product)=>total+product.quantity,0);
-
-
-   
+     
         const orderToAdd={
+            id:Math.random().toString(36).substr(2, 9) ,
             date:currentDate(),
             products:cartProducts,
             totalProducts:totalProducts,
@@ -22,7 +21,10 @@ const CheckoutSideMenu = () => {
         }
         setOrder([...order,orderToAdd])
  
+        
         setCartProducts([])
+        setSearchByTitle("")
+        toggleCheckoutSideMenu();
 
     }
 

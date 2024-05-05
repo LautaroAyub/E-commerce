@@ -1,37 +1,103 @@
-import { useState, useEffect } from "react"
+import { useContext } from "react"
 import Layout from "../../Components/Layout"
 
 import Card from "../../Components/Card";
 import Productdetail from "../../Components/ProductDetail";
+import { ShoppingCartContext } from "../../Context";
 
 function Home() {
-    const urlAPI = 'https://fakestoreapi.com';
-    const [items, setItems] = useState(null)
+    const { items, searchByTitle, setSearchByTitle, filteredItems } = useContext(ShoppingCartContext)
+    // If you want to insert a category, do it in pathAndCategory with its respective path. Category filtering does not have a state; it filters using the existing items using the values inserted in pathAndCategory.
 
-    useEffect(() => {
-        fetch(`${urlAPI}/products`)
-            .then(response => response.json())
-            .then(data => setItems(data))
-            .catch(err=>console.log(err))
+    const pathAndCategories = {
+        "/clothes": "clothing",
+        "/electronics": "electronics",
+        "/jewelerys": "jewelery"
+    }
+    const renderSearch = (items) => {
+        if (items?.length > 0) {
+            return (
+                items?.map((item) => (
+                    <Card key={item.id} data={item} />
+                ))
+            )
+        }
+        else {
+            return (
+                <div className=" ">No products found matching your search. Please try again with different terms.</div>
+            )
+        }
 
-    }, [])
+    }
+
+    const renderView = (categories) => {
+        const areInHome = window.location.pathname === "/"
+        const existSearch = searchByTitle?.length > 0;
+        //In Home
+        if (areInHome) {
+
+            if (existSearch) {
+                return (
+                    renderSearch(filteredItems)
+                )
+
+            }
+            return (
+                items?.map((item) => (
+                    <Card key={item.id} data={item} />
+                ))
+            )
+
+        }
+        //In Categories
+
+
+        if (!areInHome) {
+            //Utils 
+            let categoryOfThePath = categories[window.location.pathname];
+            let itemsFilterByPath = items?.filter(item => item.category.includes(categoryOfThePath));
+
+            if (searchByTitle?.length === 0) {
+
+                return (
+                    itemsFilterByPath?.map((item) => (
+
+                        <Card key={item.id} data={item} />
+                    ))
+                )
+            }
+            if (existSearch) {
+                return (
+                    renderSearch(filteredItems?.filter(item => item.category.includes(categoryOfThePath)))
+                )
+                //Only returns items that meet the corresponding category.
+
+            }
+        }
+    }
+
 
     return (
         <Layout>
-            Home
-            <div className="grid gap-10 grid-cols-4 w-full max-w-screen-lg">
-                {
-                    items?.map((item) => (
-                        <Card key={item.id} data={item} />
-                    ))
-                }
+            <div className="flex items-center justify-center relative w-80 mb-4">
+                <h1 className="font-medium text-xl">Exclusive Products</h1>
+
             </div>
-            <Productdetail/>
-           
+            <input type="text"
+                placeholder="Search Products"
+                className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+                onChange={(e) => setSearchByTitle(e.target.value)} />
+            <div className="grid gap-10 grid-cols-4 w-full max-w-screen-lg">
+
+                {renderView(pathAndCategories)}
+            </div>
+            <Productdetail />
+
 
         </Layout>
 
     )
+
 }
 
 export default Home

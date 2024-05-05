@@ -54,8 +54,8 @@ const NavBar = () => {
 
                 </li>
                 <li>
-                    <NavItem to="/furnitures" activeStyle={activeStyle}>
-                        Furnitures
+                    <NavItem to="/jewelerys" activeStyle={activeStyle}>
+                        Jewelerys
                     </NavItem>
 
                 </li>

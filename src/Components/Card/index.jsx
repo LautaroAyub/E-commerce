@@ -9,7 +9,7 @@ const Card = (data) => {
 
     ///Data
     //Pull context
-    const { count, setCount, openProductDetail, toggleCheckoutSideMenu, isProductDetailOpen, setProductToShow, setCartProducts, cartProducts } = useContext(ShoppingCartContext)
+    const { count, setCount, openProductDetail, toggleCheckoutSideMenu, isProductDetailOpen,isCheckoutSideMenuOpen, setProductToShow, setCartProducts, cartProducts } = useContext(ShoppingCartContext)
     // Shortcuts for easier access to the data
     const category = data.data.category;
     const urlImage = data.data.image;
@@ -20,12 +20,16 @@ const Card = (data) => {
     //utils
     const showProduct = (productDetail) => {
         {
-            if (isProductDetailOpen) {
-                toggleCheckoutSideMenu()
-            }
-
+           if(isCheckoutSideMenuOpen){
+               toggleCheckoutSideMenu()
+               openProductDetail()
+           }
+           else{
             openProductDetail()
             setProductToShow(productDetail)
+           }
+            
+
         }
     }
 

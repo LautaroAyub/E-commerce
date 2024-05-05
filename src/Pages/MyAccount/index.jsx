@@ -1,13 +1,15 @@
 import Layout from "../../Components/Layout"
 function MyAccount() {
 
-    return (
-      <Layout>
-    MyAccount
-        </Layout>
+  return (
+    <Layout>
+      <div className="flex items-center justify-center relative w-80 mb-4">
+        <h1 className="font-medium text-xl">My Account</h1>
+      </div>
+  
+    </Layout>
 
-    )
-  }
-  
-  export default MyAccount
-  
+  )
+} 
+
+export default MyAccount
