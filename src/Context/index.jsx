@@ -30,7 +30,6 @@ export const ShoppingCartProvider = ({ children }) => {
         if(searchByTitle){
             setFilteredItems(itemsFilter(items, searchByTitle))
         }
-        console.log(filteredItems,"filteredItems")
         
     }, [items, searchByTitle])
 
@@ -59,7 +58,7 @@ export const ShoppingCartProvider = ({ children }) => {
 
     //Shopping cart ' Add products to cart | State
     const [cartProducts, setCartProducts] = useState([])
-    console.log(cartProducts)
+   
 
     //Shopping cart ' Order
     const [order, setOrder] = useState([])
@@ -75,8 +74,7 @@ export const ShoppingCartProvider = ({ children }) => {
         updateQuantityInIconCart();
     }, [cartProducts]);
 
-
-
+// Utils for edit order
 
     return (
         <ShoppingCartContext.Provider value={{

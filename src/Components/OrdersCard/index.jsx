@@ -1,10 +1,24 @@
+import { useContext } from "react";
 import CartIcon from "../../Icons/CartIcon";
 import CashIcon from "../../Icons/CashIcon";
 import DateIcon from "../../Icons/DateIcon";
+import TrashIcon from "../../Icons/TrashIcon";
+import { ShoppingCartContext } from "../../Context";
 
-const OrdersCard = (props) => {
-    const { totalPrice, totalProducts, date } = props;
+const OrdersCard = ({ totalPrice, totalProducts, date, indexOrder }) => {
+   const {order,setOrder}=useContext(ShoppingCartContext)
 
+    const deleteOrder=(e)=>{
+        e.preventDefault()
+        const isConfirmed = window.confirm('¿Estás seguro de que deseas eliminar esta orden?');
+        if (isConfirmed) {
+       const updateOrders=[...order]
+       updateOrders.splice([indexOrder],1)
+
+       setOrder(updateOrders)
+        }
+
+    }
 
     return (
         <div className="flex flex-row items-center justify-between w-80 h-16 mb-3 rounded-lg border border-black">
@@ -27,10 +41,20 @@ const OrdersCard = (props) => {
                 </p>
             </div>
 
-            <p className="flex flex-row items-end">
-                <CashIcon />
-                <span className="text-xl font-medium ml-1"> ${totalPrice}</span>
-            </p>
+            <div className="flex flex-col items-end">
+                <div className="p-1" onClick={
+                    (e) => { deleteOrder(e) }}>
+                    <TrashIcon />
+                </div>
+
+                <div
+                    className="flex flex-row items-end mb-1 mr-2">
+                    <CashIcon />
+                    <span className="text-xl font-medium ml-1"> ${totalPrice}</span>
+                </div>
+
+            </div>
+
 
 
 

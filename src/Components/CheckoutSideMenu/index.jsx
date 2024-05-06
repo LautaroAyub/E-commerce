@@ -3,20 +3,21 @@ import { Link } from "react-router-dom"
 import CloseIcon from "../../Icons/CloseIcon"
 import { ShoppingCartContext } from "../../Context"
 import OrderCard from "../OrderCard"
-import { currentDate, totalPrice } from "../../Utils"
+import { currentDate, totalPrice,totalProducts } from "../../Utils"
 
 
 const CheckoutSideMenu = () => {
     const {isCheckoutSideMenuOpen, toggleCheckoutSideMenu,cartProducts,setOrder,order,setCartProducts, setSearchByTitle } = useContext(ShoppingCartContext) 
 
     const handleCheckout=() => {
-     const totalProducts= cartProducts.reduce((total,product)=>total+product.quantity,0);
+        
+  
      
         const orderToAdd={
             id:Math.random().toString(36).substr(2, 9) ,
             date:currentDate(),
             products:cartProducts,
-            totalProducts:totalProducts,
+            totalProducts:totalProducts(cartProducts),
             totalPrice:totalPrice(cartProducts)
         }
         setOrder([...order,orderToAdd])

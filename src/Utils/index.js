@@ -18,3 +18,11 @@ export const currentDate = () => {
     const date = new Date().toLocaleDateString();
     return date
  }
+
+/**
+ * 
+ * @param {Array} products 
+ * @returns {number}
+ */
+export const totalProducts= (products)=>{ 
+    return products.reduce((total,product)=>total+product.quantity,0)}

@@ -1,38 +1,62 @@
 import { useContext } from "react";
 import { ShoppingCartContext } from "../../Context";
 import CloseIcon from "../../Icons/CloseIcon"
+import { currentDate, totalPrice, totalProducts } from "../../Utils"
+import TrashIcon from "../../Icons/TrashIcon";
 
-const OrderCard = (props) => {
-  const { setCartProducts, cartProducts,setOrder,order } = useContext(ShoppingCartContext)
-  const { id, imageUrl, title, price, quantity,type,indexOrder } = props;
+const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) => {
+  const { setCartProducts, cartProducts, setOrder, order } = useContext(ShoppingCartContext)
 
   //Utils | Functions
-  const indexProduct =(products,id)=>(
+  const indexProduct = (products, id) => (
     products.findIndex(element => element.id === id))
 
-  const updatedCartProducts = [...cartProducts];
+
 
   const updateQuantity = ({ id, num }) => {
-    updatedCartProducts[indexProduct(cartProducts,id)].quantity = num;
+    const updatedCartProducts = [...cartProducts];
+    updatedCartProducts[indexProduct(cartProducts, id)].quantity = num;
     setCartProducts(updatedCartProducts);
   }
   const deleteProductInCart = (id) => {
-    updatedCartProducts.splice([indexProduct(cartProducts,id)], 1);
-    console.log(updatedCartProducts, "asdas")
+    const updatedCartProducts = [...cartProducts].filter(product => product.id !== id)
+
     setCartProducts(updatedCartProducts);
   }
 
 
-//for orders
-  
-  const editOrder=({id,num})=>{
-    const updatedOrder=[...order]
-   const productsInThisOrder= updatedOrder[indexOrder].products;
-   const indexProductToChange=indexProduct(productsInThisOrder,id)
-   productsInThisOrder[indexProductToChange].quantity = num;
+  //for orders
+
+  const editOrder = ({ id, num, typeEdit }) => {
+    // Copy the current orders
+    const updatedOrders = [...order]
+    // Find the order to edit
+    const orderEdited = updatedOrders[indexOrder]
+    // Find the index of the product to change
+    const indexProductToChange = indexProduct(orderEdited.products, id)
+
+
+    if (typeEdit === "quantity") {
+      // Update the quantity of the product
+      orderEdited.products[indexProductToChange].quantity = num}
+
+
+    if (typeEdit === "delete") {
+     orderEdited.products.splice([indexProductToChange],1)}
    
-    setOrder(updatedOrder)
+          // Update the order with the new information
+          updatedOrders[indexOrder] = {
+            ...orderEdited,
+            date: currentDate(),
+            products: orderEdited.products,
+            totalProducts: totalProducts(orderEdited.products),
+            totalPrice: totalPrice(orderEdited.products)
+          }
+    setOrder(updatedOrders);
   }
+
+
+
 
 
 
@@ -44,63 +68,53 @@ const OrderCard = (props) => {
         </figure>
         <p className="text-sm font-light px-3 ">{title}</p>
 
+
       </div>
-
- {(()=>{
-  if(type!=="order"){
-    return(
-      <>
-      <select
-      value={quantity}
-      onChange={(e) => { updateQuantity({ id, num: parseInt(e.target.value) }) }}
-    >
-      {Array.from({ length: 10 }, (_, index) => (
-        <option key={index} value={index + 1}>{index + 1}</option>
-      ))}
-    </select>
+      {type !== "order" && (
+        <>
+          <select
+            value={quantity}
+            onChange={(e) => { updateQuantity({ id, num: parseInt(e.target.value) }) }}
+          >
+            {Array.from({ length: 10 }, (_, index) => (
+              <option key={index} value={index + 1}>{index + 1}</option>
+            ))}
+          </select>
           <div className="flex flex-col items-end h-full justify-around">
-          <span className="cursor-pointer" onClick={() => deleteProductInCart(id)}>
-            <CloseIcon h='6' w='6' /></span>
-  
-          <p className="text-lg font-medium">${price * quantity}</p>
-  
-        </div>
-        </>
-    )
+            <span className="cursor-pointer" onClick={() => deleteProductInCart(id)}>
+              <TrashIcon  /></span>
 
- }
- })()
-}
-{(()=>{
-  if(type==="order"){
-    return(
-      <>
-   <select
-      value={quantity}
-      onChange={(e) => { 
-        editOrder({id,num: parseInt(e.target.value)})
-     }}
-    >
-      {Array.from({ length: 10 }, (_, index) => (
-        <option key={index} value={index + 1}>{index + 1}</option>
-      ))}
-    </select>
+            <p className="text-lg font-medium">${price * quantity}</p>
+          </div>
+        </>
+      )}
+      {type === "order" && (
+
+        <>
+          <select
+            value={quantity}
+            onChange={(e) => {
+              editOrder({ id: id, num: parseInt(e.target.value), typeEdit: "quantity" })
+            }}
+          >
+            {Array.from({ length: 10 }, (_, index) => (
+              <option key={index} value={index + 1}>{index + 1}</option>
+            ))}
+          </select>
 
           <div className="flex flex-col items-end h-full justify-around">
-          <span className="cursor-pointer" onClick={() => deleteProductInCart(id)}>
-            <CloseIcon h='6' w='6' /></span>
-          <p className="text-lg font-medium">${price * quantity}</p>
-  
-        </div>
+            <span className="cursor-pointer" onClick={() =>
+              editOrder({
+                id: id, typeEdit:"delete"
+              })}>
+              <TrashIcon  /></span>
+            <p className="text-lg font-medium">${price * quantity}</p>
+
+          </div>
         </>
-    )
+      )
 
- }
- })()
-}
-    
-
-
+      }
 
     </div>
   )

@@ -87,11 +87,11 @@ function Home() {
                 placeholder="Search Products"
                 className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
                 onChange={(e) => setSearchByTitle(e.target.value)} />
-            <div className="grid gap-10 grid-cols-4 w-full max-w-screen-lg">
+            <div className="grid gap-10 grid-cols-3 w-full max-w-screen-lg lg:grid-cols-4">
 
                 {renderView(pathAndCategories)}
             </div>
-            <Productdetail />
+            <Productdetail/>
 
 
         </Layout>

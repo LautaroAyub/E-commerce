@@ -79,7 +79,7 @@ const Card = (data) => {
             <figure className='relative mb-2 w-full h-4/5'>
 
                 <span className='absolute bottom-0 left-0 bg-white/60 rounded-lg text-black text-xs m-1 px-3 py-0.5' >{category}</span>
-                <img className='w-full h-full object-cover rounded-lg' src={urlImage} alt='headphones' />
+                <img className='w-full h-full object-contain rounded-lg' src={urlImage} alt='headphones' />
                 <div className='absolute top-0 right-0 flex justify-center
                 items-center bg-white w-5 h-5 rounded-full text-lg p-0 m-1'
                     onClick={(e) => {
