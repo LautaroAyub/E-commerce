@@ -10,9 +10,6 @@ const CheckoutSideMenu = () => {
     const {isCheckoutSideMenuOpen, toggleCheckoutSideMenu,cartProducts,setOrder,order,setCartProducts, setSearchByTitle } = useContext(ShoppingCartContext) 
 
     const handleCheckout=() => {
-        
-  
-     
         const orderToAdd={
             id:Math.random().toString(36).substr(2, 9) ,
             date:currentDate(),
@@ -21,8 +18,6 @@ const CheckoutSideMenu = () => {
             totalPrice:totalPrice(cartProducts)
         }
         setOrder([...order,orderToAdd])
- 
-        
         setCartProducts([])
         setSearchByTitle("")
         toggleCheckoutSideMenu();

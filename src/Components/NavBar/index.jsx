@@ -3,6 +3,10 @@ import { ShoppingCartContext } from "../../Context"
 import { useContext } from "react"
 import EmptyBagIcon from "../../Icons/EmptyBagIcon"
 import FullBagIcon from "../../Icons/FullBag"
+import MenuIconMobile from "../../Icons/MenuIconMobile"
+import CloseIcon from "../../Icons/CloseIcon"
+import { Nav, NavBarWrapper, Menu, MenuItem, IconMobileMenu, MenuCategory } from "./NavBarElements"
+
 
 
 const NavItem = ({ to, activeStyle, children }) => {
@@ -18,102 +22,115 @@ const NavItem = ({ to, activeStyle, children }) => {
 
 
 const NavBar = () => {
-    const { count,toggleCheckoutSideMenu,closeProductDetail} = useContext(ShoppingCartContext)
+    const { count, categoriesIsOpen, isMenuOpen, closeCategoryMobile,
+openCheckoutSideMenu, toggleMenuMobile,setIsMenuOpen } = useContext(ShoppingCartContext)
     const activeStyle = "underline underline-offset-3"
 
-    const openCheckoutSideMenu =()=>{
-        closeProductDetail()
-        toggleCheckoutSideMenu()
-       
-    }
     return (
-        <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light">
-            <ul className="flex items-center gap-3">
-
-                <li className="font-semibold text-lg"  >
-                    <NavItem to="/" activeStyle={undefined}>
-                        Shopi
-                    </NavItem>
-
-                </li>
-                <li>
-                    <NavItem to="/" activeStyle={activeStyle}>
-                        All
-                    </NavItem>
-                </li>
-                <li>
-                    <NavItem to="/clothes" activeStyle={activeStyle}>
-                        Clothes
-                    </NavItem>
-
-                </li>
-                <li>
-                    <NavItem to="/electronics" activeStyle={activeStyle}>
-                        Electronics
-                    </NavItem>
-
-                </li>
-                <li>
-                    <NavItem to="/jewelerys" activeStyle={activeStyle}>
-                        Jewelerys
-                    </NavItem>
-
-                </li>
-                <li>
-                    <NavItem to="/toys" activeStyle={activeStyle}>
-                        Toys
-                    </NavItem>
-                </li>
-                <li>
-                    <NavItem to="/others" activeStyle={activeStyle}>
-                        Others
-                    </NavItem>
-                </li>
+        <>
 
 
-            </ul>
-            <ul className="flex items-center gap-3">
+            <Nav >
+                <NavBarWrapper>
+                    <IconMobileMenu onClick={toggleMenuMobile}>
+                        <MenuIconMobile />
+                    </IconMobileMenu>
 
-                <li className="text-black/60">
-                    lautaroayub@hotmail.com
-                </li>
-                <li>
-                    <NavItem to="/my-orders" activeStyle={activeStyle}>
-                        My Orders
-                    </NavItem>
-
-                </li>
-                <li>
-                    <NavItem to="/my-account" activeStyle={activeStyle}>
-                        My Account
-                    </NavItem>
-
-                </li>
-                <li>
-                    <NavItem to="/sing-in" activeStyle={activeStyle}>
-                        Sing In
-                    </NavItem>
-                </li>
-
-                <li onClick={()=>openCheckoutSideMenu()}
-                className="flex flex-row cursor-pointer">
-
-                    {count === 0 ?
-                      <>  
-                    <EmptyBagIcon h="6" w="6"/>{count}
-                    </>
-                    :
-                    <>
-                    <FullBagIcon h="6" w="6"/>{count}
-                    </>
-                }
-
-                </li>
+                    <MenuItem className="font-semibold text-lg"
+                        onClick={() => setIsMenuOpen(false)} >
+                        <NavItem to="/" activeStyle={undefined}>
+                            Shopi
+                        </NavItem>
 
 
+                    </MenuItem>
 
-            </ul>
-        </nav>
+                    <MenuCategory categoriesIsOpen={categoriesIsOpen} >
+                        <IconMobileMenu onClick={() => closeCategoryMobile()}>
+                            <CloseIcon />
+                        </IconMobileMenu>
+                        <MenuItem>
+                            <NavItem to="/" activeStyle={activeStyle}>
+                                All
+                            </NavItem>
+                        </MenuItem>
+                        <MenuItem>
+                            <NavItem to="/clothes" activeStyle={activeStyle}>
+                                Clothes
+                            </NavItem>
+
+                        </MenuItem>
+                        <MenuItem>
+                            <NavItem to="/electronics" activeStyle={activeStyle}>
+                                Electronics
+                            </NavItem>
+
+                        </MenuItem>
+                        <MenuItem>
+                            <NavItem to="/jewelerys" activeStyle={activeStyle}>
+                                Jewelerys
+                            </NavItem>
+
+                        </MenuItem>
+                        <MenuItem>
+                            <NavItem to="/toys" activeStyle={activeStyle}>
+                                Toys
+                            </NavItem>
+                        </MenuItem>
+                        <MenuItem>
+                            <NavItem to="/others" activeStyle={activeStyle}>
+                                Others
+                            </NavItem>
+                        </MenuItem>
+                    </MenuCategory>
+
+                    <Menu isMenuOpen={isMenuOpen}>
+
+                        <MenuItem
+                            className="text-black/60"
+                            onClick={toggleMenuMobile}>
+                            lautaroayub@hotmail.com
+                        </MenuItem>
+                        <MenuItem onClick={toggleMenuMobile}>
+                            <NavItem to="/my-orders" activeStyle={activeStyle}>
+                                My Orders
+                            </NavItem>
+
+                        </MenuItem >
+                        <MenuItem onClick={toggleMenuMobile}>
+                            <NavItem to="/my-account" activeStyle={activeStyle}>
+                                My Account
+                            </NavItem>
+
+                        </MenuItem>
+                        <MenuItem onClick={toggleMenuMobile}>
+                            <NavItem to="/sing-in" activeStyle={activeStyle}>
+                                Sing In
+                            </NavItem>
+                        </MenuItem>
+
+
+                    </Menu>
+
+
+                    <MenuItem onClick={() => openCheckoutSideMenu()}
+                        className="flex flex-row cursor-pointer">
+
+                        {count === 0 ?
+                            <>
+                                <EmptyBagIcon h="6" w="6" />{count}
+                            </>
+                            :
+                            <>
+                                <FullBagIcon h="6" w="6" />{count}
+                            </>
+                        }
+
+                    </MenuItem>
+                </NavBarWrapper>
+            </Nav>
+
+        </>
     )
 }
 export { NavBar }

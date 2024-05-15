@@ -9,7 +9,7 @@ import SingIn from '../SingIn'
 import { NavBar } from '../../Components/NavBar'
 import './App.css'
 import CheckoutSideMenu from '../../Components/CheckoutSideMenu'
-
+import ButtonUtils from '../../Components/ButtonUtils'
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -36,7 +36,7 @@ const App = () => {
         <AppRoutes />
         <NavBar />
         <CheckoutSideMenu/>
-
+      <ButtonUtils/>
       </BrowserRouter>
     </ShoppingCartProvider>
 

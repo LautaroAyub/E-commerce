@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { ShoppingCartContext } from "../../Context";
-import CloseIcon from "../../Icons/CloseIcon"
 import { currentDate, totalPrice, totalProducts } from "../../Utils"
 import TrashIcon from "../../Icons/TrashIcon";
 
@@ -82,7 +81,7 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
           </select>
           <div className="flex flex-col items-end h-full justify-around">
             <span className="cursor-pointer" onClick={() => deleteProductInCart(id)}>
-              <TrashIcon  /></span>
+              <TrashIcon size={"5em"} /></span>
 
             <p className="text-lg font-medium">${price * quantity}</p>
           </div>

@@ -4,6 +4,7 @@ import Layout from "../../Components/Layout"
 import Card from "../../Components/Card";
 import Productdetail from "../../Components/ProductDetail";
 import { ShoppingCartContext } from "../../Context";
+import { CardsContain } from "./HomeStyled";
 
 function Home() {
     const { items, searchByTitle, setSearchByTitle, filteredItems } = useContext(ShoppingCartContext)
@@ -85,12 +86,13 @@ function Home() {
             </div>
             <input type="text"
                 placeholder="Search Products"
-                className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+                className="rounded-lg border border-black w-80 p-4 mb-10 focus:outline-none"
                 onChange={(e) => setSearchByTitle(e.target.value)} />
-            <div className="grid gap-10 grid-cols-3 w-full max-w-screen-lg lg:grid-cols-4">
+            <CardsContain >
 
                 {renderView(pathAndCategories)}
-            </div>
+                
+            </CardsContain>
             <Productdetail/>
 
 

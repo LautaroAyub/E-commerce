@@ -55,21 +55,7 @@ const Card = (data) => {
             const updatedCartProducts = [...cartProducts];
             updatedCartProducts[indexProduct].quantity += 1;
             setCartProducts(updatedCartProducts);
-
-
-            // const updatedCartProducts = cartProducts.map((item, index) =>
-            //     index === indexProduct ? { ...item, quantity: item.quantity + 1 } : item
-            // );
-            // setCartProducts(updatedCartProducts);
-
-
-
         }
-
-
-
-        // console.log(cartProducts," CART PRODUCTS")
-
     }
 
 
