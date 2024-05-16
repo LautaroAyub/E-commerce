@@ -57,7 +57,7 @@ export const MenuItem=styled.li`
 display: flex;
 justify-content: center;
 align-items: center;
-height: 100%;
+height: 10%;
 padding: 3px;
 font-size: 1rem;
 font-weight:400;
@@ -65,6 +65,7 @@ margin-top:10px;
 margin-left: 10px;
 
 @media screen and (min-width: 960px) {
+  height: 100%;
     &:hover{
 background-color:rgba(235, 237, 239,1);
 border-radius:2px;
