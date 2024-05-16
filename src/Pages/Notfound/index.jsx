@@ -5,7 +5,6 @@ function NotFound() {
       <Layout>
       NotFound
         </Layout>
-
     )
   }
   

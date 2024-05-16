@@ -1,9 +1,8 @@
 import { useContext } from "react"
-import Layout from "../../Components/Layout"
-
-import Card from "../../Components/Card";
-import Productdetail from "../../Components/ProductDetail";
 import { ShoppingCartContext } from "../../Context";
+import Layout from "../../Components/Layout"
+import Card from "../../Components/Card";
+import ProductDetail from "../../Components/ProductDetail";
 import { CardsContain } from "./HomeStyled";
 
 function Home() {
@@ -34,6 +33,7 @@ function Home() {
     const renderView = (categories) => {
         const areInHome = window.location.pathname === "/"
         const existSearch = searchByTitle?.length > 0;
+        
         //In Home
         if (areInHome) {
 
@@ -50,9 +50,8 @@ function Home() {
             )
 
         }
+
         //In Categories
-
-
         if (!areInHome) {
             //Utils 
             let categoryOfThePath = categories[window.location.pathname];
@@ -72,7 +71,6 @@ function Home() {
                     renderSearch(filteredItems?.filter(item => item.category.includes(categoryOfThePath)))
                 )
                 //Only returns items that meet the corresponding category.
-
             }
         }
     }
@@ -93,9 +91,7 @@ function Home() {
                 {renderView(pathAndCategories)}
                 
             </CardsContain>
-            <Productdetail/>
-
-
+            <ProductDetail/>
         </Layout>
 
     )

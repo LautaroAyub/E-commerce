@@ -1,15 +1,15 @@
 import { useContext } from "react"
-import { ShoppingCartContext } from "../../Context"
+import { NavigationContext } from "../../Context/NavigationContext"
 import UpChevronIcon from "../../Icons/UpChevronIcon"
 import DownChevronIcon from "../../Icons/DownChevronIcon"
-
+import{IconMobileMenu} from "../../MobileElements/MobileElements"
 
 
 const Button = ({ children, action }) => {
-    const { openCategoryMobile, closeCategoryMobile, categoriesIsOpen } = useContext(ShoppingCartContext)
-    console.log(categoriesIsOpen, "asdsda")
-
+    const { openCategoryMobile, closeCategoryMobile } = useContext(NavigationContext)
+  
     return (
+        <IconMobileMenu>
         <button className=" fixed flex justify-center items-center h-10 w-10 bg-gray-400  bg-opacity-20
     rounded-full bottom-5 text-lg font-bold"
             onClick={() => {
@@ -20,11 +20,12 @@ const Button = ({ children, action }) => {
             }}>
             {children}
         </button>
+        </IconMobileMenu>
     )
 }
 
 const ButtonUtils = () => {
-    const { categoriesIsOpen } = useContext(ShoppingCartContext)
+    const { categoriesIsOpen } = useContext(NavigationContext)
     return (
         <>
             {

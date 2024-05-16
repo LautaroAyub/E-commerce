@@ -1,5 +1,6 @@
 import { useRoutes, BrowserRouter } from 'react-router-dom'
-import { ShoppingCartProvider } from '../../Context'
+import { ShoppingCartProvider } from '../../Context/index'
+import { NavigationContextProvider } from '../../Context/NavigationContext'
 import Home from '../Home'
 import MyAccount from '../MyAccount'
 import MyOrder from '../MyOrder'
@@ -30,6 +31,7 @@ const AppRoutes = () => {
 const App = () => {
 
   return (
+    <NavigationContextProvider>
     <ShoppingCartProvider>
       <BrowserRouter>
 
@@ -39,6 +41,7 @@ const App = () => {
       <ButtonUtils/>
       </BrowserRouter>
     </ShoppingCartProvider>
+    </NavigationContextProvider>
 
   )
 }

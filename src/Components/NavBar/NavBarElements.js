@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components"
 
 export const Nav =styled.nav`
  position: fixed;
- height: 48px;
+ height: 56px;
   top: 0;
   left: 0;
   z-index: 10;
@@ -27,7 +27,7 @@ font-size: medium;
 font-weight:lighter;
 /* border: 1px solid yellow; */
 `
-export const Menu=styled.ul`
+export const MenuAccount=styled.ul`
 position: absolute;
 top: 50px;
 left: ${({isMenuOpen}) => isMenuOpen? 0 :"-100%"};
@@ -54,22 +54,24 @@ gap:1rem;
 
 
 export const MenuItem=styled.li`
-height: 10%;
 display: flex;
 justify-content: center;
 align-items: center;
+height: 100%;
+padding: 3px;
 font-size: 1rem;
-font-weight:medium;
+font-weight:400;
 margin-top:10px;
 margin-left: 10px;
-    /* &:hover{
-background-color: #7ff2d6c2
-} */
-@media screen and (min-width: 960px) {
 
+@media screen and (min-width: 960px) {
+    &:hover{
+background-color:rgba(235, 237, 239,1);
+border-radius:2px;
+}
 }
 `
-const disappear = keyframes`
+const disappear= keyframes`
   0% {
     opacity: 1;
     transform: translateY(0);
@@ -91,13 +93,14 @@ const appear= keyframes`
 
 
 export const MenuCategory=styled.ul`
-background-color: rgba(156, 163, 175, .5);
-border-radius:10px;
+background-color: rgba(235, 237, 239,1);
 display: flex;
 flex-direction: column;
 align-items: start;
-position:absolute ;
-top: 370px;
+position:fixed;
+padding: 4px;
+top: 350px;
+border-radius:10px;
 left: ${ ({categoriesIsOpen})=>categoriesIsOpen? "0":"-80px"};
 animation:${ ({categoriesIsOpen})=> categoriesIsOpen? appear: disappear} 0.5s forwards ;
 
@@ -116,12 +119,5 @@ animation:${appear} 0.5s forwards ;
 `
 
 
-
-export const IconMobileMenu=styled.div`
-display: flex;
-@media screen and ( min-width:960px){
-    display: none;
-}
-`
 
 

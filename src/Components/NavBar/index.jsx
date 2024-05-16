@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom"
-import { ShoppingCartContext } from "../../Context"
 import { useContext } from "react"
+import { ShoppingCartContext } from "../../Context"
+import { NavigationContext } from "../../Context/NavigationContext"
 import EmptyBagIcon from "../../Icons/EmptyBagIcon"
 import FullBagIcon from "../../Icons/FullBag"
 import MenuIconMobile from "../../Icons/MenuIconMobile"
 import CloseIcon from "../../Icons/CloseIcon"
-import { Nav, NavBarWrapper, Menu, MenuItem, IconMobileMenu, MenuCategory } from "./NavBarElements"
-
+import { IconMobileMenu } from "../../MobileElements/MobileElements"
+import { Nav, NavBarWrapper, MenuAccount, MenuItem, MenuCategory } from "./NavBarElements"
 
 
 const NavItem = ({ to, activeStyle, children }) => {
@@ -22,14 +23,15 @@ const NavItem = ({ to, activeStyle, children }) => {
 
 
 const NavBar = () => {
-    const { count, categoriesIsOpen, isMenuOpen, closeCategoryMobile,
-openCheckoutSideMenu, toggleMenuMobile,setIsMenuOpen } = useContext(ShoppingCartContext)
+    const { count } = useContext(ShoppingCartContext)
+
+    const { categoriesIsOpen, isMenuOpen, closeCategoryMobile,
+        openCheckoutSideMenu, toggleMenuMobile, setIsMenuOpen } = useContext(NavigationContext)
+
     const activeStyle = "underline underline-offset-3"
 
     return (
         <>
-
-
             <Nav >
                 <NavBarWrapper>
                     <IconMobileMenu onClick={toggleMenuMobile}>
@@ -46,9 +48,10 @@ openCheckoutSideMenu, toggleMenuMobile,setIsMenuOpen } = useContext(ShoppingCart
                     </MenuItem>
 
                     <MenuCategory categoriesIsOpen={categoriesIsOpen} >
-                        <IconMobileMenu onClick={() => closeCategoryMobile()}>
+                        <IconMobileMenu className="absolute right-0 m-1" onClick={() => closeCategoryMobile()}>
                             <CloseIcon />
                         </IconMobileMenu>
+
                         <MenuItem>
                             <NavItem to="/" activeStyle={activeStyle}>
                                 All
@@ -84,7 +87,8 @@ openCheckoutSideMenu, toggleMenuMobile,setIsMenuOpen } = useContext(ShoppingCart
                         </MenuItem>
                     </MenuCategory>
 
-                    <Menu isMenuOpen={isMenuOpen}>
+                    <MenuAccount
+                        isMenuOpen={isMenuOpen}>
 
                         <MenuItem
                             className="text-black/60"
@@ -110,7 +114,7 @@ openCheckoutSideMenu, toggleMenuMobile,setIsMenuOpen } = useContext(ShoppingCart
                         </MenuItem>
 
 
-                    </Menu>
+                    </MenuAccount>
 
 
                     <MenuItem onClick={() => openCheckoutSideMenu()}

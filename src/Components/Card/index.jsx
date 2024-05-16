@@ -1,15 +1,14 @@
 import { useContext } from 'react';
 import { ShoppingCartContext } from '../../Context';
+import { NavigationContext } from '../../Context/NavigationContext';
 import AddIcon from '../../Icons/AddIcon';
 
 
 const Card = (data) => {
-
-
-
-    ///Data
-    //Pull context
-    const { count, setCount, openProductDetail, toggleCheckoutSideMenu, isProductDetailOpen,isCheckoutSideMenuOpen, setProductToShow, setCartProducts, cartProducts } = useContext(ShoppingCartContext)
+    ///context data
+    const { count, setCount, setProductToShow, setCartProducts, cartProducts } = useContext(ShoppingCartContext)
+    const {openProductDetail, toggleCheckoutSideMenu,isCheckoutSideMenuOpen } = useContext(NavigationContext)
+    
     // Shortcuts for easier access to the data
     const category = data.data.category;
     const urlImage = data.data.image;

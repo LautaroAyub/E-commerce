@@ -4,13 +4,12 @@ import { currentDate, totalPrice, totalProducts } from "../../Utils"
 import TrashIcon from "../../Icons/TrashIcon";
 
 const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) => {
+
   const { setCartProducts, cartProducts, setOrder, order } = useContext(ShoppingCartContext)
 
   //Utils | Functions
   const indexProduct = (products, id) => (
     products.findIndex(element => element.id === id))
-
-
 
   const updateQuantity = ({ id, num }) => {
     const updatedCartProducts = [...cartProducts];
@@ -23,9 +22,6 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
     setCartProducts(updatedCartProducts);
   }
 
-
-  //for orders
-
   const editOrder = ({ id, num, typeEdit }) => {
     // Copy the current orders
     const updatedOrders = [...order]
@@ -37,25 +33,24 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
 
     if (typeEdit === "quantity") {
       // Update the quantity of the product
-      orderEdited.products[indexProductToChange].quantity = num}
+      orderEdited.products[indexProductToChange].quantity = num
+    }
 
 
     if (typeEdit === "delete") {
-     orderEdited.products.splice([indexProductToChange],1)}
-   
-          // Update the order with the new information
-          updatedOrders[indexOrder] = {
-            ...orderEdited,
-            date: currentDate(),
-            products: orderEdited.products,
-            totalProducts: totalProducts(orderEdited.products),
-            totalPrice: totalPrice(orderEdited.products)
-          }
+      orderEdited.products.splice([indexProductToChange], 1)
+    }
+
+    // Update the order with the new information
+    updatedOrders[indexOrder] = {
+      ...orderEdited,
+      date: currentDate(),
+      products: orderEdited.products,
+      totalProducts: totalProducts(orderEdited.products),
+      totalPrice: totalPrice(orderEdited.products)
+    }
     setOrder(updatedOrders);
   }
-
-
-
 
 
 
@@ -104,9 +99,9 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
           <div className="flex flex-col items-end h-full justify-around">
             <span className="cursor-pointer" onClick={() =>
               editOrder({
-                id: id, typeEdit:"delete"
+                id: id, typeEdit: "delete"
               })}>
-              <TrashIcon  /></span>
+              <TrashIcon /></span>
             <p className="text-lg font-medium">${price * quantity}</p>
 
           </div>

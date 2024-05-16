@@ -1,13 +1,17 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
-import CloseIcon from "../../Icons/CloseIcon"
 import { ShoppingCartContext } from "../../Context"
-import OrderCard from "../OrderCard"
+import { NavigationContext } from "../../Context/NavigationContext"
 import { currentDate, totalPrice,totalProducts } from "../../Utils"
+import CloseIcon from "../../Icons/CloseIcon"
+import OrderCard from "../OrderCard"
 
 
 const CheckoutSideMenu = () => {
-    const {isCheckoutSideMenuOpen, toggleCheckoutSideMenu,cartProducts,setOrder,order,setCartProducts, setSearchByTitle } = useContext(ShoppingCartContext) 
+    const {cartProducts,setOrder,order,setCartProducts, setSearchByTitle } = useContext(ShoppingCartContext) 
+
+    const {isCheckoutSideMenuOpen, toggleCheckoutSideMenu } = useContext(NavigationContext) 
+
 
     const handleCheckout=() => {
         const orderToAdd={

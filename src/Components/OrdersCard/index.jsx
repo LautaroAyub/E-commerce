@@ -1,29 +1,27 @@
 import { useContext } from "react";
+import { ShoppingCartContext } from "../../Context";
 import CartIcon from "../../Icons/CartIcon";
 import CashIcon from "../../Icons/CashIcon";
 import DateIcon from "../../Icons/DateIcon";
 import TrashIcon from "../../Icons/TrashIcon";
-import { ShoppingCartContext } from "../../Context";
 
 const OrdersCard = ({ totalPrice, totalProducts, date, indexOrder }) => {
-   const {order,setOrder}=useContext(ShoppingCartContext)
 
-    const deleteOrder=(e)=>{
+    const { order, setOrder } = useContext(ShoppingCartContext)
+
+    //Utils
+    const deleteOrder = (e) => {
         e.preventDefault()
         const isConfirmed = window.confirm('¿Estás seguro de que deseas eliminar esta orden?');
         if (isConfirmed) {
-       const updateOrders=[...order]
-       updateOrders.splice([indexOrder],1)
-
-       setOrder(updateOrders)
+            const updateOrders = [...order]
+            updateOrders.splice([indexOrder], 1)
+            setOrder(updateOrders)
         }
-
     }
 
     return (
         <div className="flex flex-row items-center justify-between w-80 h-16 mb-3 rounded-lg border border-black">
-
-
 
             <div className="flex flex-col ">
 
@@ -55,13 +53,7 @@ const OrdersCard = ({ totalPrice, totalProducts, date, indexOrder }) => {
 
             </div>
 
-
-
-
-
         </div>
-
     )
-
 }
 export default OrdersCard

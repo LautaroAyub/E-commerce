@@ -1,12 +1,15 @@
 import { useContext } from "react"
-import Layout from "../../Components/Layout"
-import { ShoppingCartContext } from "../../Context"
-import OrderCard from "../../Components/OrderCard"
 import { Link } from "react-router-dom"
+import { ShoppingCartContext } from "../../Context"
+import Layout from "../../Components/Layout"
+import OrderCard from "../../Components/OrderCard"
 import BackChevronIcon from "../../Icons/BackChevronIcon"
 
 function MyOrder() {
+
   const { order } = useContext(ShoppingCartContext)
+
+  //utils
   const currentPath = window.location.pathname
   let index = currentPath.substring(currentPath.lastIndexOf("/") + 1)
   if (index === "last") index = order?.length - 1;
@@ -17,7 +20,7 @@ function MyOrder() {
         <Link to="/my-orders">
           <BackChevronIcon />
         </Link>
-        <div className="flex items-center justify-center relative w-80 mb-4">
+        <div className="flex items-center justify-center w-80 mb-4">
           <h1 className="font-medium text-xl">My Order</h1>
         </div>
 
