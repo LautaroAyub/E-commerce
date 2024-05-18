@@ -4,9 +4,10 @@ import Layout from "../../Components/Layout"
 import Card from "../../Components/Card";
 import ProductDetail from "../../Components/ProductDetail";
 import { CardsContain } from "./HomeStyled";
+import CardLoading from "../../Components/CardLoading";
 
 function Home() {
-    const { items, searchByTitle, setSearchByTitle, filteredItems } = useContext(ShoppingCartContext)
+    const { items, searchByTitle, setSearchByTitle, filteredItems, loading } = useContext(ShoppingCartContext)
     // If you want to insert a category, do it in pathAndCategory with its respective path. Category filtering does not have a state; it filters using the existing items using the values inserted in pathAndCategory.
 
     const pathAndCategories = {
@@ -33,7 +34,7 @@ function Home() {
     const renderView = (categories) => {
         const areInHome = window.location.pathname === "/"
         const existSearch = searchByTitle?.length > 0;
-        
+
         //In Home
         if (areInHome) {
 
@@ -87,11 +88,31 @@ function Home() {
                 className="rounded-lg border border-black w-80 p-4 mb-10 focus:outline-none"
                 onChange={(e) => setSearchByTitle(e.target.value)} />
             <CardsContain >
+                <>
+                    {loading &&
+                        <div>
+                            <CardsContain>
+                                <CardLoading />
+                                <CardLoading />
+                                <CardLoading />
+                                <CardLoading />
+                                <CardLoading />
+                                <CardLoading />
+                                <CardLoading />
+                                <CardLoading />
+                                <CardLoading />
+                            </CardsContain>
 
-                {renderView(pathAndCategories)}
-                
+                        </div>
+
+                    }
+                    {!loading &&
+                        renderView(pathAndCategories)
+                    }
+
+                </>
             </CardsContain>
-            <ProductDetail/>
+            <ProductDetail />
         </Layout>
 
     )

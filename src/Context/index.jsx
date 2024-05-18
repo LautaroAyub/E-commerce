@@ -3,18 +3,25 @@ import { createContext, useEffect, useState } from 'react'
 export const ShoppingCartContext = createContext()
 
 export const ShoppingCartProvider = ({ children }) => {
-
+    const [loading,setLoading] = useState(true)
     //Get Products API
     const urlAPI = 'https://fakestoreapi.com';
 
     const [items, setItems] = useState(null)
-    useEffect(() => {
-        fetch(`${urlAPI}/products`)
-            .then(response => response.json())
-            .then(data =>{ console.log(data),setItems(data)})
-            .catch(err => console.log(err))
-            
-    }, [])
+   
+        useEffect(() => {
+            setTimeout(()=>{ 
+            fetch(`${urlAPI}/products`)
+                .then(response => response.json())
+                .then(data =>{ console.log(data),setItems(data)})
+                .catch(err => console.log(err))
+                setLoading(false)
+            },2000)
+        }, [])
+     
+        
+
+    
     
 
     // Search <input> Products State
@@ -64,6 +71,7 @@ export const ShoppingCartProvider = ({ children }) => {
 
     return (
         <ShoppingCartContext.Provider value={{
+            loading,
             items,
             count,
             setCount,
@@ -78,6 +86,7 @@ export const ShoppingCartProvider = ({ children }) => {
             setSearchByTitle,
             filteredItems,
             setFilteredItems,
+            
 
         }}
         >

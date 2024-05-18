@@ -1,0 +1,18 @@
+.loadingBackground{
+
+    background: linear-gradient(90deg, rgba(250,250,250,0.5),rgba(200,199,199,0.3));
+    background-size: 400% 400%;
+    animation:loadingAnimation 3s ease-in-out infinite;
+}
+
+@keyframes loadingAnimation{
+0%{
+    background-position:0% 50% ;
+}
+50%{
+    background-position: 100% 50%;
+}
+100%{
+    background-position: 0% 50%;
+}
+}
