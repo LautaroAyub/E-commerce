@@ -53,7 +53,7 @@ export const ShoppingCartProvider = ({ children }) => {
     const [cartProducts, setCartProducts] = useState([])
 
 
-    //Shopping cart ' Order
+    //Shopping cart from ' Order
     const [order, setOrder] = useState([])
 
 

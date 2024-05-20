@@ -1,10 +1,8 @@
 import "./cardLoading.css"
 
-const CardLoading = () => {
 
-
+const Card = () => {
     return (
-
         <div className=' cursor-pointer w-56 h-60 rounded-lg '>
             <figure className='relative mb-2 w-full h-4/5'>
                 <span className=' loadingBackground absolute bottom-0 left-0 rounded-lg m-1 w-16 h-3' ></span>
@@ -19,6 +17,23 @@ const CardLoading = () => {
                 <span className='loadingBackground w-6 h-4 rounded-lg'></span>
             </p>
         </div>
+    );
+}
+const CardLoading = (value) => {
+    let loadingCards = [];
+    
+    // {value.quantity}
+
+    for (let i = 0; i < value.quantity; i++) {
+        loadingCards.push(
+            <Card/>
+        )
+    }
+
+    console.log(loadingCards);
+
+    return (
+        loadingCards
     )
 }
 export default CardLoading

@@ -92,15 +92,8 @@ function Home() {
                     {loading &&
                         <div>
                             <CardsContain>
-                                <CardLoading />
-                                <CardLoading />
-                                <CardLoading />
-                                <CardLoading />
-                                <CardLoading />
-                                <CardLoading />
-                                <CardLoading />
-                                <CardLoading />
-                                <CardLoading />
+                                <CardLoading quantity="10"/>
+              
                             </CardsContain>
 
                         </div>
