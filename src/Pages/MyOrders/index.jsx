@@ -6,10 +6,8 @@ import OrdersCard from "../../Components/OrdersCard"
 import ButtonBackToHome from "../../Components/ButtonUtils/ButtonBackToHome"
 
 
-
-
 function MyOrders() {
-  const { order } = useContext(ShoppingCartContext)
+  const { ordersInStorage:order } = useContext(ShoppingCartContext)
 
   return (
     <Layout>
@@ -20,17 +18,14 @@ function MyOrders() {
         </div>
       </div>
 
-
-      {
-        order.length === 0 &&
+      { order?.length === 0 &&
         <div className="h-full flex justify-center items-center">
           <p >No hay ordenes registradas</p>
         </div>
       }
 
-      {
-
-        order.map((order, index) => (
+      
+      {order?.map((order, index) => (
           <>
             <Link key={index} to={`/my-orders/${index}`}>
               <OrdersCard

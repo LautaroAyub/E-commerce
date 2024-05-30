@@ -7,12 +7,12 @@ import BackChevronIcon from "../../Icons/BackChevronIcon"
 
 function MyOrder() {
 
-  const { order } = useContext(ShoppingCartContext)
+  const { ordersInStorage } = useContext(ShoppingCartContext)
 
   //utils
   const currentPath = window.location.pathname
   let index = currentPath.substring(currentPath.lastIndexOf("/") + 1)
-  if (index === "last") index = order?.length - 1;
+  if (index === "last") index = ordersInStorage?.length - 1;
 
   return (
     <Layout>
@@ -29,7 +29,7 @@ function MyOrder() {
       <div className=" flex flex-col w-80">
         {
 
-          order?.[index]?.products.map((product) => (
+  ordersInStorage?.[index]?.products.map((product) => (
             <OrderCard
             type="order"
             indexOrder={index}

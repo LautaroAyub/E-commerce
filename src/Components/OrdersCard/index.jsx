@@ -7,16 +7,16 @@ import TrashIcon from "../../Icons/TrashIcon";
 
 const OrdersCard = ({ totalPrice, totalProducts, date, indexOrder }) => {
 
-    const { order, setOrder } = useContext(ShoppingCartContext)
+    const { ordersInStorage, saveNewOrdersInStorage } = useContext(ShoppingCartContext)
 
     //Utils
     const deleteOrder = (e) => {
         e.preventDefault()
         const isConfirmed = window.confirm('¿Estás seguro de que deseas eliminar esta orden?');
         if (isConfirmed) {
-            const updateOrders = [...order]
+            const updateOrders = [...ordersInStorage]
             updateOrders.splice([indexOrder], 1)
-            setOrder(updateOrders)
+            saveNewOrdersInStorage(updateOrders)
         }
     }
 
@@ -38,20 +38,18 @@ const OrdersCard = ({ totalPrice, totalProducts, date, indexOrder }) => {
                     </span>
                 </p>
             </div>
-
+            <div
+                className="flex flex-row items-end mb-1 mr-2">
+                <CashIcon />
+                <span className="text-xl font-medium ml-1"> ${totalPrice}</span>
+            </div>
             <div className="flex flex-col items-end">
                 <div className="p-1" onClick={
                     (e) => { deleteOrder(e) }}>
                     <TrashIcon />
                 </div>
-
-                <div
-                    className="flex flex-row items-end mb-1 mr-2">
-                    <CashIcon />
-                    <span className="text-xl font-medium ml-1"> ${totalPrice}</span>
-                </div>
-
             </div>
+
 
         </div>
     )

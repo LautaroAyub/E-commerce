@@ -5,12 +5,12 @@ import TrashIcon from "../../Icons/TrashIcon";
 
 const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) => {
 
-  const { setCartProducts, cartProducts, setOrder, order } = useContext(ShoppingCartContext)
+  const { setCartProducts, cartProducts, ordersInStorage,saveNewOrdersInStorage } = useContext(ShoppingCartContext)
 
-  //Utils | Functions
+  //Utils
   const indexProduct = (products, id) => (
     products.findIndex(element => element.id === id))
-
+//| Functions to order in cart
   const updateQuantity = ({ id, num }) => {
     const updatedCartProducts = [...cartProducts];
     updatedCartProducts[indexProduct(cartProducts, id)].quantity = num;
@@ -18,30 +18,27 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
   }
   const deleteProductInCart = (id) => {
     const updatedCartProducts = [...cartProducts].filter(product => product.id !== id)
-
     setCartProducts(updatedCartProducts);
   }
 
+  // Functions to orders already placed
+
   const editOrder = ({ id, num, typeEdit }) => {
     // Copy the current orders
-    const updatedOrders = [...order]
+    const updatedOrders = [...ordersInStorage]
     // Find the order to edit
     const orderEdited = updatedOrders[indexOrder]
     // Find the index of the product to change
     const indexProductToChange = indexProduct(orderEdited.products, id)
-
-
     if (typeEdit === "quantity") {
       // Update the quantity of the product
       orderEdited.products[indexProductToChange].quantity = num
     }
-
-
     if (typeEdit === "delete") {
       orderEdited.products.splice([indexProductToChange], 1)
     }
 
-    // Update the order with the new information
+    // Replace the order with the new information
     updatedOrders[indexOrder] = {
       ...orderEdited,
       date: currentDate(),
@@ -49,9 +46,8 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
       totalProducts: totalProducts(orderEdited.products),
       totalPrice: totalPrice(orderEdited.products)
     }
-    setOrder(updatedOrders);
+    saveNewOrdersInStorage(updatedOrders);
   }
-
 
 
   return (
@@ -61,10 +57,8 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
           <img className="h-full w-full rounded-lg object-cover" src={imageUrl} alt="" />
         </figure>
         <p className="text-sm font-light px-3 ">{title}</p>
-
-
       </div>
-      {type !== "order" && (
+      {type == "order-in-cart" && (
         <>
           <select
             value={quantity}
@@ -89,8 +83,8 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
             value={quantity}
             onChange={(e) => {
               editOrder({ id: id, num: parseInt(e.target.value), typeEdit: "quantity" })
-            }}
-          >
+            }}>
+              
             {Array.from({ length: 10 }, (_, index) => (
               <option key={index} value={index + 1}>{index + 1}</option>
             ))}
@@ -107,7 +101,6 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
           </div>
         </>
       )
-
       }
 
     </div>
