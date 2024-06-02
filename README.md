@@ -2,13 +2,13 @@
 <p aling=center>
   <img src="https://img.shields.io/badge/license-MIT-blue">
 <img src="https://img.shields.io/badge/React_Version-18-blue">
-<img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green">
+<img src="https://img.shields.io/badge/STATUS-STABLE-green">
   <p/>
 Hola!
 El motivo de este proyecto fue poner a prueba mis tecnicas en React. 
 Cree una aplicacion web responsiva que simula una Store en la cual el usuario podrá ver los productos disponibles de una manera organizada y 
 podrá crear ordenes de compra.
-Intente llevar un uso ordenado de los commit con git bash para poner en practica el flujo laboral.
+Intente llevar un uso ordenado de los commit con git para poner en practica el flujo laboral.
 
 
 
@@ -20,6 +20,7 @@ Intente llevar un uso ordenado de los commit con git bash para poner en practica
 -  -`Funcionalidad 2a`: Editar y eliminar las ordenes-
 -  `Funcionalidad 3`: Buscar y filtrar productos por categoria-
 -  -  `Funcionalidad 4`: Visivilizar el detalle de cada producto-
+-  `Funcionalidad5`: Almacenar en Local Storage la informacion de las ordenes y de los productos en el carrito de compras(optimizado con " throttle " para evitar numerosas llamadas).
 
 
 \## 🌏 *Page*
@@ -37,4 +38,5 @@ https://gregarious-vacherin-be1726.netlify.app/
 
 1. *gh-pages* => Codigo estatico para el uso en pages.
 2. *master* => Es la rama principal en la que se utilizo la version 18 de React.
+3. *test-useLocalStorage*=> Es la rama en la que se puso a prueba el uso de local storage para almacenar la informacion del usuario.
 
