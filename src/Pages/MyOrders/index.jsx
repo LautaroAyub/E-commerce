@@ -18,7 +18,7 @@ function MyOrders() {
         </div>
       </div>
 
-      { order?.length === 0 &&
+      {order?.length === 0 &&
         <div className="h-full flex justify-center items-center">
           <p >No hay ordenes registradas</p>
         </div>

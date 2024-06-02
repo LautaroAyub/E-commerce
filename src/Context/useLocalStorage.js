@@ -1,41 +1,75 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
+import { throttle } from 'lodash';
 
-function useLocalStorage(itemName,initialValue)  {
+function useLocalStorage(itemName, initialValue) {
     //Shopping cart ' Order
-    
+
     const [ordersInStorage, setOrdersInStorage] = useState([])
-              console.log("orders in storage",ordersInStorage);
-              
-    useEffect(() =>{
-        try{
-            const getLocalStorageOrders=localStorage.getItem(itemName);
-            if(!getLocalStorageOrders){
-                localStorage.setItem(itemName,initialValue);
+    const [productsCartStorage, setProductsCartStorage] = useState([])
+
+    useEffect(() => {
+        try {
+            const getProductsCartInStorage = localStorage.getItem(itemName);
+            if (!getProductsCartInStorage) {
+                localStorage.setItem(itemName, initialValue);
                 return
-            }else{
-            setOrdersInStorage(JSON.parse(getLocalStorageOrders))
+            } else {
+                setProductsCartStorage(JSON.parse(getProductsCartInStorage))
             }
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
+    }, [])
 
+    const saveProductsInCartStorage = useCallback(
+        throttle((newProducts) => {
+            console.log("***ejecution***");
+            localStorage.removeItem("cart-products")
+            localStorage.setItem("cart-products", JSON.stringify(newProducts))
+        }
+            , 6000), [])
 
-    },[])
-
-  const saveNewOrdersInStorage=(newOrders)=>{
-            setOrdersInStorage(newOrders)
-            localStorage.removeItem("orders")
-            localStorage.setItem(itemName, JSON.stringify(newOrders))
+    const deleteProductsInCartStorage = () => {
+        localStorage.removeItem("cart-products")
+        setProductsCartStorage([])
     }
 
 
-    
+    useEffect(() => {
+        try {
+            const getLocalStorageOrders = localStorage.getItem(itemName);
+            if (!getLocalStorageOrders) {
+                localStorage.setItem(itemName, initialValue);
+                return
+            } else {
+                setOrdersInStorage(JSON.parse(getLocalStorageOrders))
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }, [])
+
+    const saveNewOrdersInStorage = (newOrders) => {
+        setOrdersInStorage(newOrders)
+        localStorage.removeItem("orders")
+        localStorage.setItem("orders", JSON.stringify(newOrders))
+    }
+
+
+
     return {
         ordersInStorage,
         setOrdersInStorage,
-        saveNewOrdersInStorage
-        }
-} 
+        setProductsCartStorage,
+        saveNewOrdersInStorage,
+        productsCartStorage,
+        saveProductsInCartStorage,
+        deleteProductsInCartStorage
+    }
+}
 // localStorage.removeItem("orders")
-export {useLocalStorage}
+// localStorage.removeItem("cart-products")
+export { useLocalStorage }
+

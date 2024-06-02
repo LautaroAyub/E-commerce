@@ -90,13 +90,7 @@ function Home() {
             <CardsContain >
                 <>
                     {loading &&
-                        <div>
-                            <CardsContain>
-                                <CardLoading quantity="10"/>
-              
-                            </CardsContain>
-
-                        </div>
+                     <CardLoading quantity="10"/>
 
                     }
                     {!loading &&

@@ -8,7 +8,7 @@ import OrderCard from "../OrderCard"
 
 
 const CheckoutSideMenu = () => {
-    const { cartProducts, setCartProducts, setSearchByTitle, ordersInStorage,saveNewOrdersInStorage } = useContext(ShoppingCartContext)
+    const {productsCartStorage,deleteProductsInCartStorage, setSearchByTitle, ordersInStorage,saveNewOrdersInStorage } = useContext(ShoppingCartContext)
 
     const { isCheckoutSideMenuOpen, toggleCheckoutSideMenu } = useContext(NavigationContext)
 
@@ -17,14 +17,13 @@ const CheckoutSideMenu = () => {
         const orderToAdd = {
             id: Math.random().toString(36).substr(2, 9),
             date: currentDate(),
-            products: cartProducts,
-            totalProducts: totalProducts(cartProducts),
-            totalPrice: totalPrice(cartProducts)
+            products: productsCartStorage,
+            totalProducts: totalProducts(productsCartStorage),
+            totalPrice: totalPrice(productsCartStorage)
         }
         const newOrders=[...ordersInStorage,orderToAdd]
         saveNewOrdersInStorage(newOrders)
-        console.log("handle cheackout",ordersInStorage)
-        setCartProducts([])
+        deleteProductsInCartStorage()
         setSearchByTitle("")
         toggleCheckoutSideMenu();
     }
@@ -44,7 +43,7 @@ const CheckoutSideMenu = () => {
 
             <div className=" flex-1 px-6  overflow-x-hidden overflow-y-scroll">
                 {
-                    cartProducts.map((product) => (
+                    productsCartStorage.map((product) => (
                         <OrderCard
                         type="order-in-cart"
                             key={product.id}
@@ -60,7 +59,7 @@ const CheckoutSideMenu = () => {
             <div className="px-6">
                 <p className="flex justify-between items-center mb-2">
                     <span className="font-light ">Total:</span>
-                    <span className="font-medium text-2xl ">{totalPrice(cartProducts)}</span>
+                    <span className="font-medium text-2xl ">{totalPrice(productsCartStorage)}</span>
                 </p>
             </div>
             <Link to="/my-orders/last">

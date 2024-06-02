@@ -5,23 +5,25 @@ import TrashIcon from "../../Icons/TrashIcon";
 
 const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) => {
 
-  const { setCartProducts, cartProducts, ordersInStorage,saveNewOrdersInStorage } = useContext(ShoppingCartContext)
+  const {saveProductsInCartStorage,productsCartStorage, setProductsCartStorage, ordersInStorage,saveNewOrdersInStorage } = useContext(ShoppingCartContext)
 
   //Utils
   const indexProduct = (products, id) => (
     products.findIndex(element => element.id === id))
-//| Functions to order in cart
+//| Functions to order in "CART"
   const updateQuantity = ({ id, num }) => {
-    const updatedCartProducts = [...cartProducts];
-    updatedCartProducts[indexProduct(cartProducts, id)].quantity = num;
-    setCartProducts(updatedCartProducts);
+    const updatedCartProducts = [...productsCartStorage];
+    updatedCartProducts[indexProduct(productsCartStorage, id)].quantity = num;
+    setProductsCartStorage([...updatedCartProducts])
+    saveProductsInCartStorage(updatedCartProducts);
   }
   const deleteProductInCart = (id) => {
-    const updatedCartProducts = [...cartProducts].filter(product => product.id !== id)
-    setCartProducts(updatedCartProducts);
+    const updatedCartProducts = [...productsCartStorage].filter(product => product.id !== id)
+    setProductsCartStorage([...updatedCartProducts])
+    saveProductsInCartStorage(updatedCartProducts);
   }
 
-  // Functions to orders already placed
+  // Functions to "ORDERS" already placed
 
   const editOrder = ({ id, num, typeEdit }) => {
     // Copy the current orders
@@ -84,7 +86,7 @@ const OrderCard = ({ id, imageUrl, title, price, quantity, type, indexOrder }) =
             onChange={(e) => {
               editOrder({ id: id, num: parseInt(e.target.value), typeEdit: "quantity" })
             }}>
-              
+
             {Array.from({ length: 10 }, (_, index) => (
               <option key={index} value={index + 1}>{index + 1}</option>
             ))}

@@ -25,7 +25,6 @@ align-items: center;
 justify-content: space-between;
 font-size: medium;
 font-weight:lighter;
-/* border: 1px solid yellow; */
 `
 export const MenuAccount=styled.ul`
 position: absolute;

@@ -11,9 +11,7 @@ function SingIn() {
           <h1 className="font-medium text-xl">SingIn</h1>
         </div>
       </div>
-    
     </Layout>
-
   )
 }
 
