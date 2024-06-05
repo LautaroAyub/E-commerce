@@ -66,7 +66,7 @@ margin-left: 10px;
 @media screen and (min-width: 960px) {
   height: 100%;
     &:hover{
-background-color:rgba(235, 237, 239,1);
+background-color:rgba(235, 237, 239,.4);
 border-radius:2px;
 }
 }
