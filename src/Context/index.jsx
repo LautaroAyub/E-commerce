@@ -1,28 +1,28 @@
 import { createContext, useEffect, useState } from 'react'
+import { useLocalStorage } from './useLocalStorage';
 
 export const ShoppingCartContext = createContext()
 
 export const ShoppingCartProvider = ({ children }) => {
-    const [loading,setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
     //Get Products API
     const urlAPI = 'https://fakestoreapi.com';
-
     const [items, setItems] = useState(null)
-   
-        useEffect(() => {
-            setTimeout(()=>{ 
+    useEffect(() => {
+        setTimeout(() => {
             fetch(`${urlAPI}/products`)
                 .then(response => response.json())
-                .then(data =>{ console.log(data),setItems(data)})
+                .then(data => {setItems(data) })
                 .catch(err => console.log(err))
-                setLoading(false)
-            },2000)
-        }, [])
-     
-        
-
-    
-    
+            setLoading(false)
+        }, 2000)
+    }, [])
+    //Local Storage
+    const { ordersInStorage,
+        setOrdersInStorage,
+        saveNewOrdersInStorage } = useLocalStorage("orders", [])
+    const { productsCartStorage, setProductsCartStorage, saveProductsInCartStorage, deleteProductsInCartStorage } = useLocalStorage("cart-products", [])
+    //
 
     // Search <input> Products State
     const [searchByTitle, setSearchByTitle] = useState("")
@@ -37,37 +37,22 @@ export const ShoppingCartProvider = ({ children }) => {
         if (searchByTitle) {
             setFilteredItems(itemsFilter(items, searchByTitle))
         }
-
     }, [items, searchByTitle])
-
-
 
     //Shopping Cart . Increment quantity } State
     const [count, setCount] = useState(0)
-
-
-    //Product Detail ' Show Product | State
-    const [productToShow, setProductToShow] = useState({})
-
-    //Shopping cart ' Add products to cart | State
-    const [cartProducts, setCartProducts] = useState([])
-
-
-    //Shopping cart from ' Order
-    const [order, setOrder] = useState([])
-
-
-    //To navBar 
+    /*To navBar This sums the quantity of products in the cart and auto-executes when there is a change.*/
     const updateQuantityInIconCart = () => {
         let numOfClothes = 0
-        cartProducts.map(element => numOfClothes += element.quantity)
+        productsCartStorage.map(element => numOfClothes += element.quantity)
         setCount(numOfClothes)
     }
     useEffect(() => {
         updateQuantityInIconCart();
-    }, [cartProducts]);
+    }, [productsCartStorage]);
 
-    // Utils for edit order
+    //Product Detail ' Show Product | State
+    const [productToShow, setProductToShow] = useState({})
 
     return (
         <ShoppingCartContext.Provider value={{
@@ -77,21 +62,22 @@ export const ShoppingCartProvider = ({ children }) => {
             setCount,
             productToShow,
             setProductToShow,
-            setCartProducts,
-            cartProducts,
             updateQuantityInIconCart,
-            order,
-            setOrder,
             searchByTitle,
             setSearchByTitle,
             filteredItems,
             setFilteredItems,
-            
+            ordersInStorage,
+            setOrdersInStorage,
+            saveNewOrdersInStorage,
+            productsCartStorage,
+            setProductsCartStorage,
+            saveProductsInCartStorage,
+            deleteProductsInCartStorage,
 
         }}
         >
             {children}
         </ShoppingCartContext.Provider>
-
     )
 }

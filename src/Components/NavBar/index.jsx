@@ -108,8 +108,8 @@ const NavBar = () => {
 
                         </MenuItem>
                         <MenuItem onClick={toggleMenuMobile}>
-                            <NavItem to="/sing-in" activeStyle={activeStyle}>
-                                Sing In
+                            <NavItem to="/sign-in" activeStyle={activeStyle}>
+                                Sign In
                             </NavItem>
                         </MenuItem>
 

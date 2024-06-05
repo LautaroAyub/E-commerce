@@ -2,35 +2,35 @@ import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { ShoppingCartContext } from "../../Context"
 import { NavigationContext } from "../../Context/NavigationContext"
-import { currentDate, totalPrice,totalProducts } from "../../Utils"
+import { currentDate, totalPrice, totalProducts } from "../../Utils"
 import CloseIcon from "../../Icons/CloseIcon"
 import OrderCard from "../OrderCard"
 
 
 const CheckoutSideMenu = () => {
-    const {cartProducts,setOrder,order,setCartProducts, setSearchByTitle } = useContext(ShoppingCartContext) 
+    const {productsCartStorage,deleteProductsInCartStorage, setSearchByTitle, ordersInStorage,saveNewOrdersInStorage } = useContext(ShoppingCartContext)
 
-    const {isCheckoutSideMenuOpen, toggleCheckoutSideMenu } = useContext(NavigationContext) 
+    const { isCheckoutSideMenuOpen, toggleCheckoutSideMenu } = useContext(NavigationContext)
 
 
-    const handleCheckout=() => {
-        const orderToAdd={
-            id:Math.random().toString(36).substr(2, 9) ,
-            date:currentDate(),
-            products:cartProducts,
-            totalProducts:totalProducts(cartProducts),
-            totalPrice:totalPrice(cartProducts)
+    const handleCheckout = () => {
+        const orderToAdd = {
+            id: Math.random().toString(36).substr(2, 9),
+            date: currentDate(),
+            products: productsCartStorage,
+            totalProducts: totalProducts(productsCartStorage),
+            totalPrice: totalPrice(productsCartStorage)
         }
-        setOrder([...order,orderToAdd])
-        setCartProducts([])
+        const newOrders=[...ordersInStorage,orderToAdd]
+        saveNewOrdersInStorage(newOrders)
+        deleteProductsInCartStorage()
         setSearchByTitle("")
         toggleCheckoutSideMenu();
-
     }
 
     return (
         <aside
-            className={`${isCheckoutSideMenuOpen ? 'flex' : 'hidden'} overflow-hidden w-[360px] h-[calc(100vh-80px)] top-[68px]  flex-col fixed  right-0 border border-black rounded-r-lg bg-white `} 
+            className={`${isCheckoutSideMenuOpen ? 'flex' : 'hidden'} overflow-hidden w-[360px] h-[calc(100vh-80px)] top-[68px]  flex-col fixed  right-0 border border-black rounded-r-lg bg-white `}
         >
 
             <div className="flex justify-between items-center p-6">
@@ -41,31 +41,31 @@ const CheckoutSideMenu = () => {
                 </div>
             </div>
 
-        <div className=" flex-1 px-6  overflow-x-hidden overflow-y-scroll">
-           {
-            cartProducts.map((product) =>(
-                <OrderCard 
-                key={product.id}
-                id={product.id}
-                title={product.title}
-                imageUrl={product.image}
-                price={product.price}
-                quantity={product.quantity}
-                
-                />
-            ))
-        }
-         </div>
-           <div className="px-6">
-             <p className="flex justify-between items-center mb-2"> 
-                <span className="font-light ">Total:</span>
-                <span className="font-medium text-2xl ">{totalPrice(cartProducts)}</span>
-             </p>
-           </div>
-           <Link to="/my-orders/last">
-        <button className="bg-black self-center py-3 m-6 text-white w-[90%] rounded-lg" onClick={
-           ()=>handleCheckout()}>Checkout</button>
-        </Link>
+            <div className=" flex-1 px-6  overflow-x-hidden overflow-y-scroll">
+                {
+                    productsCartStorage.map((product) => (
+                        <OrderCard
+                        type="order-in-cart"
+                            key={product.id}
+                            id={product.id}
+                            title={product.title}
+                            imageUrl={product.image}
+                            price={product.price}
+                            quantity={product.quantity}
+                        />
+                    ))
+                }
+            </div>
+            <div className="px-6">
+                <p className="flex justify-between items-center mb-2">
+                    <span className="font-light ">Total:</span>
+                    <span className="font-medium text-2xl ">{totalPrice(productsCartStorage)}</span>
+                </p>
+            </div>
+            <Link to="/my-orders/last">
+                <button className="bg-black self-center py-3 m-6 text-white w-[90%] rounded-lg" onClick={
+                    () => handleCheckout()}>Checkout</button>
+            </Link>
         </aside>
     )
 }

@@ -6,7 +6,7 @@ import AddIcon from '../../Icons/AddIcon';
 
 const Card = (data) => {
     ///context data
-    const { count, setCount, setProductToShow, setCartProducts, cartProducts } = useContext(ShoppingCartContext)
+    const { count, setCount, setProductToShow,productsCartStorage,setProductsCartStorage, saveProductsInCartStorage} = useContext(ShoppingCartContext)
     const {openProductDetail, toggleCheckoutSideMenu,isCheckoutSideMenuOpen } = useContext(NavigationContext)
     
     // Shortcuts for easier access to the data
@@ -37,23 +37,21 @@ const Card = (data) => {
         e.stopPropagation();
         setCount(count + 1)
 
-        const idsInCart = cartProducts.map((element) => (element.id))
+        const idsInCart = productsCartStorage.map((element) => (element.id))
         const isIdExisting = idsInCart.includes(product.id)
 
-        const indexProduct = cartProducts.findIndex(element => element.id === product.id)
-
-        console.log(indexProduct, "index")
+        const indexProduct = productsCartStorage.findIndex(element => element.id === product.id)
 
         if (!isIdExisting) {
             product.quantity = 1;
-            setCartProducts([...cartProducts, product])
-
-
+            setProductsCartStorage([...productsCartStorage, product])
+            saveProductsInCartStorage([...productsCartStorage, product])
         }
         else {
-            const updatedCartProducts = [...cartProducts];
+            const updatedCartProducts = [...productsCartStorage];
             updatedCartProducts[indexProduct].quantity += 1;
-            setCartProducts(updatedCartProducts);
+            setProductsCartStorage(updatedCartProducts)
+            saveProductsInCartStorage(updatedCartProducts);
         }
     }
 

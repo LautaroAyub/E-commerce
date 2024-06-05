@@ -10,11 +10,7 @@ function MyAccount() {
           <h1 className="font-medium text-xl">My Account</h1>
         </div>
       </div>
-
-
-
     </Layout>
-
   )
 }
 

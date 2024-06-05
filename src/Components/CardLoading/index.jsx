@@ -1,6 +1,5 @@
 import "./cardLoading.css"
 
-
 const Card = () => {
     return (
         <div className=' cursor-pointer w-56 h-60 rounded-lg '>
@@ -26,12 +25,9 @@ const CardLoading = (value) => {
 
     for (let i = 0; i < value.quantity; i++) {
         loadingCards.push(
-            <Card/>
+            <Card key={i}/>
         )
     }
-
-    console.log(loadingCards);
-
     return (
         loadingCards
     )
