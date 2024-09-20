@@ -8,6 +8,7 @@ import MenuIconMobile from "../../Icons/MenuIconMobile"
 import CloseIcon from "../../Icons/CloseIcon"
 import { IconMobileMenu } from "../../MobileElements/MobileElements"
 import { Nav, NavBarWrapper, MenuAccount, MenuItem, MenuCategory } from "./NavBarElements"
+import { useLocalStorage } from "../../Context/useLocalStorage"
 
 
 const NavItem = ({ to, activeStyle, children }) => {
@@ -23,12 +24,13 @@ const NavItem = ({ to, activeStyle, children }) => {
 
 
 const NavBar = () => {
-    const { count } = useContext(ShoppingCartContext)
+    const { count,updateSignInStatus,isUserSignIn } = useContext(ShoppingCartContext)
 
     const { categoriesIsOpen, isMenuOpen, closeCategoryMobile,
         openCheckoutSideMenu, toggleMenuMobile, setIsMenuOpen } = useContext(NavigationContext)
-
+    const{parsedUserSession}=useLocalStorage()
     const activeStyle = "underline underline-offset-3"
+ 
 
     return (
         <>
@@ -43,8 +45,6 @@ const NavBar = () => {
                         <NavItem to="/" activeStyle={undefined}>
                             Shopi
                         </NavItem>
-
-
                     </MenuItem>
 
                     <MenuCategory categoriesIsOpen={categoriesIsOpen} >
@@ -89,11 +89,20 @@ const NavBar = () => {
 
                     <MenuAccount
                         isMenuOpen={isMenuOpen}>
-
+                            {isUserSignIn==false&&
+                            <>
+                             <MenuItem onClick={toggleMenuMobile}>
+                            <NavItem to="/sign-in" activeStyle={activeStyle}>
+                                Sign In
+                            </NavItem>
+                        </MenuItem>
+                            </>}
+                            {isUserSignIn==true&&
+                            <>
                         <MenuItem
                             className="text-black/60"
                             onClick={toggleMenuMobile}>
-                            lautaroayub@hotmail.com
+                            {parsedUserSession?.email}
                         </MenuItem>
                         <MenuItem onClick={toggleMenuMobile}>
                             <NavItem to="/my-orders" activeStyle={activeStyle}>
@@ -107,16 +116,19 @@ const NavBar = () => {
                             </NavItem>
 
                         </MenuItem>
-                        <MenuItem onClick={toggleMenuMobile}>
-                            <NavItem to="/sign-in" activeStyle={activeStyle}>
-                                Sign In
+                        <MenuItem onClick={()=>{updateSignInStatus("sign-out"),toggleMenuMobile()}}>
+                            <NavItem  to="/" activeStyle={activeStyle}>
+                                Sign Out
                             </NavItem>
                         </MenuItem>
+                        </>
+                            }
+
 
 
                     </MenuAccount>
-
-
+                    
+                    {isUserSignIn &&
                     <MenuItem onClick={() => openCheckoutSideMenu()}
                         className="flex flex-row cursor-pointer">
 
@@ -129,8 +141,8 @@ const NavBar = () => {
                                 <FullBagIcon h="6" w="6" />{count}
                             </>
                         }
-
                     </MenuItem>
+                    }      
                 </NavBarWrapper>
             </Nav>
 

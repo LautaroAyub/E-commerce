@@ -1,7 +1,39 @@
 import { useEffect, useState, useCallback } from "react"
 import { throttle } from 'lodash';
 
-function useLocalStorage(itemName, initialValue) {
+function useLocalStorage() {
+    //Account and Sign
+    const accountInLocalStorage = localStorage.getItem("account")
+    const signOutInLocalStorage = localStorage.getItem("sign-out")
+    const userSessionInStorage = localStorage.getItem("user-session")
+
+    let parsedUserSession
+    let parsedAccounts
+    let parsedSignInStatus
+
+    if (!userSessionInStorage) {
+        localStorage.setItem("user-session", JSON.stringify({}))
+        parsedUserSession = {}
+    } else {
+        parsedUserSession = JSON.parse(userSessionInStorage)
+    }
+
+    if (!accountInLocalStorage) {
+        localStorage.setItem("account", JSON.stringify([]))
+        parsedAccounts = []
+    } else {
+        parsedAccounts = JSON.parse(accountInLocalStorage)
+    }
+
+
+    if (!signOutInLocalStorage) {
+        localStorage.setItem("sign-out", JSON.stringify(false))
+        parsedSignInStatus = false
+    } else {
+        parsedSignInStatus = JSON.parse(signOutInLocalStorage)
+    }
+
+
     //Shopping cart ' Order
 
     const [ordersInStorage, setOrdersInStorage] = useState([])
@@ -9,9 +41,9 @@ function useLocalStorage(itemName, initialValue) {
 
     useEffect(() => {
         try {
-            const getProductsCartInStorage = localStorage.getItem(itemName);
+            const getProductsCartInStorage = localStorage.getItem("cart-products");
             if (!getProductsCartInStorage) {
-                localStorage.setItem(itemName, initialValue);
+                localStorage.setItem("cart-products", []);
                 return
             } else {
                 setProductsCartStorage(JSON.parse(getProductsCartInStorage))
@@ -38,9 +70,9 @@ function useLocalStorage(itemName, initialValue) {
 
     useEffect(() => {
         try {
-            const getLocalStorageOrders = localStorage.getItem(itemName);
+            const getLocalStorageOrders = localStorage.getItem("orders");
             if (!getLocalStorageOrders) {
-                localStorage.setItem(itemName, initialValue);
+                localStorage.setItem("orders", []);
                 return
             } else {
                 setOrdersInStorage(JSON.parse(getLocalStorageOrders))
@@ -66,7 +98,12 @@ function useLocalStorage(itemName, initialValue) {
         saveNewOrdersInStorage,
         productsCartStorage,
         saveProductsInCartStorage,
-        deleteProductsInCartStorage
+        deleteProductsInCartStorage,
+        parsedUserSession,
+        parsedAccounts,
+        parsedSignInStatus
+
+
     }
 }
 // localStorage.removeItem("orders")

@@ -13,7 +13,13 @@ const CheckoutSideMenu = () => {
     const { isCheckoutSideMenuOpen, toggleCheckoutSideMenu } = useContext(NavigationContext)
 
 
-    const handleCheckout = () => {
+    const handleCheckout = (e) => {
+        if(productsCartStorage.length===0){
+            e.preventDefault()
+            alert("You have to add products to your cart to checkout")
+            return
+        } 
+        
         const orderToAdd = {
             id: Math.random().toString(36).substr(2, 9),
             date: currentDate(),
@@ -64,7 +70,7 @@ const CheckoutSideMenu = () => {
             </div>
             <Link to="/my-orders/last">
                 <button className="bg-black self-center py-3 m-6 text-white w-[90%] rounded-lg" onClick={
-                    () => handleCheckout()}>Checkout</button>
+                    (e) => handleCheckout(e)}>Checkout</button>
             </Link>
         </aside>
     )

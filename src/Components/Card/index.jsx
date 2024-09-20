@@ -2,11 +2,13 @@ import { useContext } from 'react';
 import { ShoppingCartContext } from '../../Context';
 import { NavigationContext } from '../../Context/NavigationContext';
 import AddIcon from '../../Icons/AddIcon';
+import { useNavigate } from 'react-router-dom';
 
 
 const Card = (data) => {
     ///context data
-    const { count, setCount, setProductToShow,productsCartStorage,setProductsCartStorage, saveProductsInCartStorage} = useContext(ShoppingCartContext)
+    const navigate = useNavigate();
+    const {isUserSignIn, count, setCount, setProductToShow,productsCartStorage,setProductsCartStorage, saveProductsInCartStorage} = useContext(ShoppingCartContext)
     const {openProductDetail, toggleCheckoutSideMenu,isCheckoutSideMenuOpen } = useContext(NavigationContext)
     
     // Shortcuts for easier access to the data
@@ -35,6 +37,11 @@ const Card = (data) => {
 
     const addProductsToCart = (e, product) => {
         e.stopPropagation();
+        if(!isUserSignIn){
+            alert('You must log in to add products to your cart')
+            navigate("/sign-in")
+            return;
+        }
         setCount(count + 1)
 
         const idsInCart = productsCartStorage.map((element) => (element.id))
@@ -53,6 +60,7 @@ const Card = (data) => {
             setProductsCartStorage(updatedCartProducts)
             saveProductsInCartStorage(updatedCartProducts);
         }
+       
     }
 
 
