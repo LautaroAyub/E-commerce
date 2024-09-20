@@ -5,7 +5,7 @@ export const ShoppingCartContext = createContext()
 
 export const ShoppingCartProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
-    //Get Products API
+    // API Get Products
     const urlAPI = 'https://fakestoreapi.com';
     const [items, setItems] = useState(null)
     useEffect(() => {
@@ -17,12 +17,32 @@ export const ShoppingCartProvider = ({ children }) => {
             setLoading(false)
         }, 2000)
     }, [])
-    //Local Storage
+
+
+/*Local Storage Account and Sign*/
+const { parsedAccounts,parsedSignInStatus} = useLocalStorage()
+const [account,setAccount] = useState({})
+
+const [isUserSignIn,setIsUserSignIn] = useState(parsedSignInStatus)
+
+const updateSignInStatus =(type)=>{
+    if(type==="sign-in"){
+      localStorage.setItem("sign-out",JSON.stringify(true))
+      setIsUserSignIn(true)
+    }
+    if(type==="sign-out"){
+      localStorage.setItem("sign-out",JSON.stringify(false))
+      setIsUserSignIn(false)
+    }
+} 
+
+
+ /*Local Storage Orders and Cart*/
     const { ordersInStorage,
         setOrdersInStorage,
-        saveNewOrdersInStorage } = useLocalStorage("orders", [])
-    const { productsCartStorage, setProductsCartStorage, saveProductsInCartStorage, deleteProductsInCartStorage } = useLocalStorage("cart-products", [])
-    //
+        saveNewOrdersInStorage } = useLocalStorage()
+    const { productsCartStorage, setProductsCartStorage, saveProductsInCartStorage, deleteProductsInCartStorage } = useLocalStorage()
+
 
     // Search <input> Products State
     const [searchByTitle, setSearchByTitle] = useState("")
@@ -74,6 +94,12 @@ export const ShoppingCartProvider = ({ children }) => {
             setProductsCartStorage,
             saveProductsInCartStorage,
             deleteProductsInCartStorage,
+            account,
+            setAccount,
+            isUserSignIn,
+            setIsUserSignIn,
+            updateSignInStatus ,
+            parsedAccounts
 
         }}
         >

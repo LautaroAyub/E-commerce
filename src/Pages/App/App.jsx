@@ -11,6 +11,7 @@ import { NavBar } from '../../Components/NavBar'
 import './App.css'
 import CheckoutSideMenu from '../../Components/CheckoutSideMenu'
 import ButtonUtils from '../../Components/ButtonUtils'
+import SignUp from '../SignUp'
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -23,6 +24,7 @@ const AppRoutes = () => {
     { path: "/my-orders/last", element: <MyOrder/> },
     { path: "/my-orders/:id", element: <MyOrder/> },
     { path: "/sign-in", element: <SignIn /> },
+    { path: "/sign-up", element: <SignUp /> },
     { path: "my-account", element: <MyAccount /> },
     { path: "/*", element: <NotFound /> },
   ])
